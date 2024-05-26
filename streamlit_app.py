@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 
 # Titel der App
 st.title("Meine Streamlit App")
@@ -40,7 +39,12 @@ months = data_np[:, 0]
 
 # Anzeige der Daten basierend auf der Auswahl
 st.write(f"Angezeigtes Jahr: {year}")
-fig, ax = plt.subplots()
-ax.plot(months, selected_year_data, label=year)
-ax.legend()
-st.pyplot(fig)
+
+# Erstellung eines DataFrame für den ausgewählten Jahresdaten
+selected_data_df = pd.DataFrame({
+    'Month': months,
+    'Passengers': selected_year_data
+})
+
+# Plotten der Daten mit Streamlit's line_chart
+st.line_chart(selected_data_df.set_index('Month'))
